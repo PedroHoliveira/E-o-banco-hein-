@@ -1,0 +1,156 @@
+<html>
+
+<head>
+
+	<script>
+		var saldo = 1000; //Float 1.36
+		var nome = prompt("Digite seu nome:");
+		alert("Olá " + nome + " é um prazer te ver por aqui");
+
+        function senhaD() {
+            var senha = prompt("Insira sua senha para prosseguir.");
+            if (senha == 3589) {
+                alert("Senha correta! Prossiga.")
+            }else{
+                alert("Senha incorreta. Tente novamente!");
+                senhaD();
+            }
+        }
+		function inicio() {
+            //- A ordem das opções deve ser: Saldo, Extrato, Saque, Depósito, Transferência e Sair. 
+			var escolha = parseInt(prompt('Selecione uma opção 1.) Saldo 2.) Extrato 3.) Saque 4.) Depósito 5.) transferencia 6.) Sair'));
+            switch (escolha){
+                case 1:
+			if (escolha === 1) {
+				ver_saldo();
+            }
+                break;
+
+                case 2:
+			    if (escolha === 2) {
+				extrato();
+                }
+                break;
+                
+                case 3:
+			    if (escolha === 3) {
+				fazer_saque();
+                }
+                break;
+
+                case 4:
+			    if (escolha === 4) {
+				fazer_deposito();
+                }
+                break;
+
+                case 5:
+			    if (escolha === 5) {
+				transferencia();
+                }
+                break;
+
+                case 6:
+			    if (escolha === 6) {
+				sair();
+                }
+                break;
+
+			    default:
+				erro();
+			}
+		}		
+		function ver_saldo() {
+            senhaD();
+			alert('Seu saldo atual é: ' + saldo);
+			inicio();
+		}
+		//Função recursiva, ela chama a si mesma até a quebra.
+		function fazer_deposito() {
+        //- Caso o usuário informe um valor para depósito igual ou menor que zero, não deixe a operação ocorrer.
+        //Exiba uma mensagem de "Operação não autorizada". 
+            senhaD();
+			var deposito = parseFloat(prompt('Qual o valor para depósito?'));
+			// Not a Number
+			if (isNaN(deposito) || deposito === '') {
+				alert('Por favor, informe um número:');
+				fazer_deposito();
+			}else if(deposito <=0){
+                alert("Operação não autorizada");
+                fazer_deposito();
+            } else {
+				saldo += deposito;
+				ver_saldo();
+			}
+		}
+		function fazer_saque() {
+            senhaD();
+			var saque = parseFloat(prompt('Qual o valor para saque?'));
+			if (isNaN(saque) || saque === '') {
+				alert('Por favor, informe um número:');
+				fazer_saque();
+			} else if(saque <= 0){
+				alert("Operação inválida");
+				fazer_saque();
+			} else if(saque > saldo){
+				alert("Operação inválida");
+				fazer_saque();
+			}
+			else { 
+				saldo = saldo - saque;
+				ver_saldo();
+				}
+			}
+		function erro() {
+            //- Atualize a função "erro" com as novas opções do menu.
+			alert('Por favor, informe um número entre 1 e 6');
+			inicio();
+		}
+		//Variavel confirma, é outra forma de pedir info, para o usuario. Confirma == verdadeiro ou falso (Mostra na pág, OK ou Cancelar)
+		//window.close() - Fecha a janela.
+		function sair() {
+			var confirma = confirm('Você deseja sair?');
+			if (confirma) {
+                alert("Obrigado por usar nossos serviços. " + nome + " foi um prazer te ter por aqui!")
+				window.close();
+			} else {
+				inicio();
+			}
+		}
+		//- Adicionar a opção para ver o extrato (Coloque algumas compras ou depósitos fictícios). 
+		function extrato() {
+			//DATA || TIPO || VALOR
+			alert("22/03/2022  DEP. DINHEIRO  300,00R$\n15/02/2022  DEP.DINHEIRO  250,00R$\n13/03/2022  TRANSFERENCIA  500,00R$\n10/03/2022  TRANSFERENCIA  450,00$");
+			inicio();
+		}
+		//- Adicionar a opção de transferencia.
+		//A transferência consiste em você informar o número de uma conta (pode ser qualquer número, mas obrigatoriamente um número,
+		//ou seja, nenhum outro caractere deve ser aceito), perguntar o valor da transferência e remover o valor da conta da
+		//mesma forma como na ação do saldo. Caso o usuário tente transferir mais do que tem em saldo, a ação não deve ocorrer.
+		//Exiba uma mensagem de "Operação não autorizada". 
+		function transferencia() {
+            senhaD();
+			var conta = prompt("Digite o número da conta para qual deseja fazer transferencia: ");
+				if (isNaN(conta) || conta === '') {
+					alert("É necessário informar o número da conta para fazer a transferencia");
+					transferencia();
+                }
+                var transf = prompt("Insira o valor a ser transferido");
+				if  (transf <= 0) {
+					alert("Operação não autorizada.");
+						transferencia();
+				}else if(transf > saldo ){
+						alert("Operação não autorizada");
+						transferencia();
+				}else{
+					saldo = saldo - transf;
+					    ver_saldo();
+					}
+			}	
+		inicio();
+    </script>
+    </head>
+    <body>
+
+    </body></html>
+    
